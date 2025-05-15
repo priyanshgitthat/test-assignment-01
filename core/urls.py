@@ -16,7 +16,20 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from django.contrib.auth import views as auth_views
+from accounts.views import *
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
+    path("",index,name="index"),
     path('admin/', admin.site.urls),
+    path('signup/',signup,name='signup'),
+    path('login/', auth_views.LoginView.as_view(template_name='login.html'), name='login'),
+    path('logout/', auth_views.LogoutView.as_view(next_page='login'), name='logout'),
+    path('dashboard/', dashboard, name='dashboard'),
 ]
+
+
+# ✅ Serve media files during development
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

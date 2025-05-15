@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Document</title>
+  <style>
+    body {
+      margin: 0;
+      padding-top: 60px; /* navbar height ke liye space */
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f0f4f8;
+    }
+
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      background: #3498db;
+      padding: 15px 30px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+      display: flex;
+      align-items: center;
+      z-index: 1000;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+      margin-right: 25px;
+      transition: background-color 0.3s ease, color 0.3s ease;
+      padding: 8px 12px;
+      border-radius: 5px;
+    }
+
+    nav a:hover {
+      background-color: rgba(255, 255, 255, 0.25);
+      color: #fff;
+    }
+
+    nav a:last-child {
+      margin-right: 0;
+    }
+
+    /* Responsive for smaller screens */
+    @media (max-width: 600px) {
+      nav {
+        flex-direction: column;
+        padding: 15px;
+      }
+      nav a {
+        margin: 8px 0;
+        width: 100%;
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="/">Home</a>
+
+  {% if user.is_authenticated %}
+    <a href="/dashboard/">Dashboard</a>
+    <form method="POST" action="{% url 'logout' %}" style="display:inline;">
+      {% csrf_token %}
+      <button type="submit" style="background:none; border:none; color:white; cursor:pointer; font-weight:600; padding:8px 12px; border-radius:5px;">
+        Logout
+      </button>
+    </form>
+  {% else %}
+    <a href="/signup/">Sign Up</a>
+    <a href="/login/">Login</a>
+  {% endif %}
+</nav>
+
+</body>
+</html>
